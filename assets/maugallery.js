@@ -55,8 +55,9 @@
       } else {
         return;
       }
-    });
+      
 
+    });
     $(".gallery").on("click", ".nav-link", $.fn.mauGallery.methods.filterByTag);
     $(".gallery").on("click", ".mg-prev", () =>
       $.fn.mauGallery.methods.prevImage(options.lightboxId)
@@ -154,8 +155,7 @@
         }
       });
       next =
-        imagesCollection[index] ||
-        imagesCollection[imagesCollection.length - 1];
+        imagesCollection[index - 1] || imagesCollection[0];
       $(".lightboxImage").attr("src", $(next).attr("src"));
     },
     nextImage() {
@@ -192,7 +192,8 @@
           index = i;
         }
       });
-      next = imagesCollection[index] || imagesCollection[0];
+      //Débugging en ajoutant un index à imagecollection et en spécifiant que l'on ne peut activer le suivant dès que l'on arrive au dernier élément du tableau.
+       next = imagesCollection[index + 1] || imagesCollection[imagesCollection.length - 1];
       $(".lightboxImage").attr("src", $(next).attr("src"));
     },
     createLightBox(gallery, lightboxId, navigation) {
@@ -213,6 +214,7 @@
                                 ? '<div class="mg-next" style="cursor:pointer;position:absolute;top:50%;right:-15px;background:white;}">></div>'
                                 : '<span style="display:none;" />'
                             }
+                            <img class="lightboxImage img-fluid" alt="Contenu de l'image affichée dans la modale au clique"/>
                         </div>
                     </div>
                 </div>
@@ -239,9 +241,10 @@
       if ($(this).hasClass("active-tag")) {
         return;
       }
+      //Débugging en ajoutant la class active à $(this).
       $(".active-tag").removeClass("active active-tag");
-      $(this).addClass("active-tag");
-
+      $(this).addClass("active active-tag");
+      
       var tag = $(this).data("images-toggle");
 
       $(".gallery-item").each(function() {
@@ -261,3 +264,7 @@
     }
   };
 })(jQuery);
+//Réduction de la taille des image via les logiciels en ligne et changement du format de jpg et png à webp.
+//Introduction du loding lazy.
+//Mise en place des width et height.
+//max-width 100%. 
